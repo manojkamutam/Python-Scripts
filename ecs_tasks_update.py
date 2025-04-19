@@ -2,6 +2,9 @@ import boto3
 import time
 import logging
 
+# Usage of this script : python update_ecs_task_count.py --cluster my-cluster --service my-service --count 3
+# This will update the desired count of taks for a particular service.
+
 # Configure logging
 logging.basicConfig(filename="ecs_update.log", level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s")

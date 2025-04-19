@@ -1,13 +1,14 @@
 import boto3
 import time
 import logging
+import argparse
 
 # Configure logging
 logging.basicConfig(filename="ecs_update.log", level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s")
 
 # Initialize ECS client
-ecs_client = boto3.client("ecs", region_name="us-east-1")  # Change region accordingly
+ecs_client = boto3.client("ecs", region_name="us-east-1")  # Adjust region if needed
 
 def get_current_task_count(cluster_name, service_name):
     """Fetch the current desired count of tasks for a service."""
@@ -47,11 +48,12 @@ def main(cluster_name, service_name, new_count):
     print(f"Updated Task Count: {updated_count}")
 
 if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="Update ECS Task Count")
+    parser = argparse.ArgumentParser(
+        description="Update the desired task count of an ECS service."
+    )
     parser.add_argument("--cluster", required=True, help="ECS Cluster Name")
     parser.add_argument("--service", required=True, help="ECS Service Name")
-    parser.add_argument("--count", type=int, required=True, help="New Task Count")
-    
+    parser.add_argument("--count", type=int, required=True, help="New desired task count")
+
     args = parser.parse_args()
     main(args.cluster, args.service, args.count)
